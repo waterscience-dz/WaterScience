@@ -244,7 +244,18 @@ footer p {
     color: #0b7285;
     font-size: 21px;
 }
+nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 5px;
+}
 
+nav a {
+    margin: 0 8px;
+    white-space: nowrap;
+}
 .feature p {
     font-size: 16px;
     line-height: 1.6;
