@@ -100,58 +100,82 @@ const pages = [
 ];
 
 
-searchButton.addEventListener("click", function () {
+if (searchButton) {
 
-    const searchText = searchInput.value.toLowerCase().trim();
+    searchButton.addEventListener("click", function () {
 
-    if (searchText === "") {
-        alert("Veuillez entrer une information à rechercher.");
-        return;
-    }
+        const searchText = searchInput.value.toLowerCase().trim();
 
-
-    // Chercher d'abord dans la page actuelle
-
-    const sections = document.querySelectorAll("section");
-
-    for (const section of sections) {
-
-        const content = section.innerText.toLowerCase();
-
-        if (content.includes(searchText)) {
-
-            section.scrollIntoView({
-                behavior: "smooth"
-            });
-
-            section.style.boxShadow =
-                "0 0 25px rgba(11, 114, 133, 0.5)";
-
-            setTimeout(function () {
-                section.style.boxShadow = "";
-            }, 2500);
-
+        if (searchText === "") {
+            alert("Veuillez entrer une information à rechercher.");
             return;
         }
-    }
 
+        const sections = document.querySelectorAll("section");
 
-    // Chercher dans les autres pages
+        for (const section of sections) {
 
-    for (const page of pages) {
+            const content = section.innerText.toLowerCase();
 
-        for (const keyword of page.keywords) {
+            if (content.includes(searchText)) {
 
-            if (keyword.toLowerCase().includes(searchText)) {
+                section.scrollIntoView({
+                    behavior: "smooth"
+                });
 
-                window.location.href = page.file;
+                section.style.boxShadow =
+                    "0 0 25px rgba(11, 114, 133, 0.5)";
+
+                setTimeout(function () {
+                    section.style.boxShadow = "";
+                }, 2500);
 
                 return;
             }
         }
-    }
 
 
-    alert("Aucune information trouvée dans Water Science.");
+        for (const page of pages) {
 
-});
+            for (const keyword of page.keywords) {
+
+                if (keyword.toLowerCase().includes(searchText)) {
+
+                    window.location.href = page.file;
+
+                    return;
+                }
+            }
+        }
+
+
+        alert("Aucune information trouvée dans Water Science.");
+
+    });
+
+}
+
+
+/* Enregistrement du Service Worker */
+
+if ("serviceWorker" in navigator) {
+
+    window.addEventListener("load", function () {
+
+        navigator.serviceWorker.register("./service-worker.js")
+
+            .then(function () {
+
+                console.log("Service Worker enregistré.");
+
+            })
+
+            .catch(function (error) {
+
+                console.log("Erreur Service Worker :", error);
+
+            });
+
+    });
+
+}
